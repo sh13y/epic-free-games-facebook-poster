@@ -1,22 +1,62 @@
-import facebook as fb
+import requests
+import os
+from dotenv import load_dotenv
 
-# Facebook Access Token (replace with your valid Page Access Token)
-ACCESS_TOKEN = "EAAZAmItlD4Q8BOZCQa54rGrhxGcmhnhGKf9DYmeEUHrm7YgM8N82ZBAH9mX3gtTH7tpquvMfXwPJC19ONbaeFMrg7UwFZCAlVZBaL9xH5hUwThIpkSRiqUQDBjAxI8sKTEp3XB5wtZB5gppviKhIdcrAn0JnyL58AvA3mZCJ9TbXploMDXTdohlLZAyl0jddYmBQl0LuogpFLwDFh9vNTIAZD"
+# Load environment variables from .env file
+load_dotenv()
 
-# Initialize the Facebook Graph API
-graph = fb.GraphAPI(ACCESS_TOKEN)
+# Environment variables
+PAGE_ACCESS_TOKEN = os.getenv("PAGE_ACCESS_TOKEN")
+PAGE_ID = os.getenv("PAGE_ID")
 
-# Post a message
-try:
-    post = graph.put_object(parent_object="me", connection_name="feed", message="This is an automated post!")
-    print(f"Successfully posted to Facebook: {post}")
-except fb.GraphAPIError as e:
-    print(f"Failed to post to Facebook: {e}")
+def post_to_facebook(title, description, link, image_url, end_date):
+    """Post a notification to the Facebook page."""
+    url = f"https://graph.facebook.com/v17.0/{PAGE_ID}/photos"
 
-# Post a photo with a caption
-try:
-    with open("photo.jpg", "rb") as photo:
-        photo_post = graph.put_photo(photo, message="Automated photo post with caption!")
-        print(f"Successfully posted photo: {photo_post}")
-except fb.GraphAPIError as e:
-    print(f"Failed to post photo: {e}")
+    # Build the message
+    message = (
+        f"🎮 **{title}** is now available for FREE on the Epic Games Store! 🎉\n\n"
+        f"📝 {description}\n"
+        f"📅 Valid until: {end_date}\n"
+        f"🔗 Get it here: {link}\n"
+    )
+
+    # Prepare payload
+    payload = {
+        "caption": message,
+        "url": image_url,
+        "access_token": PAGE_ACCESS_TOKEN,
+    }
+
+    # Make the POST request
+    response = requests.post(url, data=payload)
+    if response.status_code == 200:
+        print(f"Successfully posted to Facebook: {title}")
+    else:
+        print(f"Failed to post to Facebook. Error: {response.json()}")
+
+def main():
+    """Main function to fetch free games and post to Facebook."""
+    # Example data for testing
+    free_games = [
+        {
+            "title": "Hell Let Loose",
+            "description": "A WW2 platoon-based realistic multiplayer experience.",
+            "url": "https://store.epicgames.com/en-US/p/hell-let-loose",
+            "image_url": "https://example.com/image.jpg",
+            "end_date": "January 9, 2025 at 4:00 PM",
+        }
+    ]
+
+    print("Posting free games to Facebook...")
+    for game in free_games:
+        post_to_facebook(
+            game["title"],
+            game["description"],
+            game["url"],
+            game["image_url"],
+            game["end_date"],
+        )
+
+if __name__ == "__main__":
+    main()
