@@ -52,7 +52,7 @@ python facebook_poster.py
 📅 Available Until: Jan 25, 2025, 14:00 UTC  
 🔗 [Claim it now!](https://store.epicgames.com/en-US/p/super-awesome-game)  
 
-🤔 Why Use This?
+### 🤔 Why Use This?
 
 Because free games are awesome, and manually checking Epic Games every week is so 2024.
 
