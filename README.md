@@ -1,6 +1,6 @@
 # 🎮 Free On Epic - Facebook Notifier 📢  
 
-![Epic Games Freebies](assets\Screenshot.png)
+![Epic Games Freebies](assets/Screenshot.png)
 
 ## 🔥 What is this?  
 Tired of manually checking for free games on the Epic Games Store? This bot does the work for you! It fetches **free games** and posts them on your Facebook page so your followers can grab them before they’re gone! 🚀  
