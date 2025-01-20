@@ -98,7 +98,7 @@ def post_to_facebook(free_games):
         
         message = (
             f"🎮 Free Game Alert! 🎮\n\n"
-            f"🔥 {game['title']} is now available for free! 🔥\n\n"
+            f"🔥 {game['title']} is now available for free! \n\n"
             f"📝 {game['description']}\n\n"
             f"💰 Original Price: {game['original_price']} → {game['discounted_price']}\n\n"
             f"📅 Available from: {format_date(game['start_date'])} to {format_date(game['end_date'])}\n\n"
