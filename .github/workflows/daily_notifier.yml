@@ -24,8 +24,11 @@ jobs:
           pip install -r requirements.txt  # Install required Python packages
 
       - name: Run free games script
+        env:
+          FACEBOOK_ACCESS_TOKEN: ${{ secrets.FACEBOOK_ACCESS_TOKEN }}  # Use the secret
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}  # Use the secret
         run: |
-          python facebook_poster.py # Replace with your script name
+          python facebook_poster.py  # Replace with your script name
 
       - name: Commit and push changes (if needed)
         if: success()
@@ -37,4 +40,3 @@ jobs:
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
