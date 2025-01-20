@@ -25,7 +25,7 @@ jobs:
 
       - name: Run free games script
         run: |
-          python free_games_post.py  # Replace with your script name
+          python facebook_poster.py # Replace with your script name
 
       - name: Commit and push changes (if needed)
         if: success()
