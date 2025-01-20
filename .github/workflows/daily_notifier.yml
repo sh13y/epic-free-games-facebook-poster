@@ -1,0 +1,37 @@
+name: Daily Notification
+
+on:
+  schedule:
+    # This cron expression will run the workflow every day at 8 AM UTC
+    - cron: '0 8 * * *'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # Specify the Python version you need
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests  # Add any other dependencies you need
+
+      - name: Run notification script
+        run: |
+          python notify_script.py  # Replace with your actual script name
+
+      - name: Update log file
+        run: |
+          echo "Notification sent on $(date)" >> notification_log.txt
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add notification_log.txt
+          git commit -m "Update notification log"
+          git push origin main  # Change to your default branch if different

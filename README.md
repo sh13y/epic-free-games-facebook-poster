@@ -1,6 +1,6 @@
 # 🎮 Free On Epic - Facebook Notifier 📢  
 
-![Epic Games Freebies](assets/Screenshot_20250120_143637.png)
+![Epic Games Freebies](assets\Screenshot.png)
 
 ## 🔥 What is this?  
 Tired of manually checking for free games on the Epic Games Store? This bot does the work for you! It fetches **free games** and posts them on your Facebook page so your followers can grab them before they’re gone! 🚀  
@@ -20,32 +20,32 @@ Boom! Your followers get notified instantly. 🚀
 
 ## 🛠️ Installation  
 
-## 1️⃣ Clone this repository:  
-```bash
+### 1️⃣ Clone this repository: 
+
+```sh
 git clone https://github.com/sh13y/facebook-epic-free-games-notifier.git
 ```
-```bash
+```sh
 cd facebook-epic-free-games-notifier
 ```
+### 2️⃣ Install dependencies:
 
-## 2️⃣ Install dependencies:
-
-```bash
+```sh
 pip install -r requirements.txt
 ```
 
-## 3️⃣ Create a .env file with your Facebook API details:
+### 3️⃣ Create a .env file with your Facebook API details:
 
-```ini
+```
 FACEBOOK_ACCESS_TOKEN=your_facebook_token
 FACEBOOK_PAGE_ID=your_page_id
 ```
 
-## 4️⃣ Run the bot:
-
+### 4️⃣ Run the bot:
+```sh
 python facebook_poster.py
-
-## 📝 Example Post
+```
+### 📝 Example Post
 
 🎮 Game: Super Awesome Game  
 💰 Price: ~$29.99~ → **FREE**  
@@ -56,13 +56,21 @@ python facebook_poster.py
 
 Because free games are awesome, and manually checking Epic Games every week is so 2024.
 
-## 🚀 Future Plans
+### 🚀 Future Plans
 
 💡 Telegram & Discord integration
 🔥 More detailed game insights
 🌍 Multi-language support
 
-## ❤️ Support This Project
+### ❤️ Support This Project
 
 If this bot saves you time (and free game FOMO), consider giving it a ⭐ on GitHub!
+
+### License
+
+This project is licensed under the WTFPL License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+Happy gaming!
 
