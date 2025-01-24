@@ -35,8 +35,14 @@ jobs:
         run: |
           git config --global user.name "${{ secrets.GIT_USER_NAME }}"
           git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
-          git add posted_games.log
-          git commit -m 'Update posted games log'
-          git push
+          
+          # Check if there are any changes to commit
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git add posted_games.log
+            git commit -m 'Update posted games log'
+            git push
+          else
+            echo "No changes to commit. Skipping..."
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
