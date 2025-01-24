@@ -87,10 +87,9 @@ def post_to_facebook(free_games):
     """Post free games information to Facebook page."""
     if not free_games:
         logging.info("No free games to post on Facebook.")
-        return False  # Return False when no games are found
+        return
     
     posted_games = read_posted_games()
-    games_posted = False  # Track if any games were posted
     
     for game in free_games:
         if game['title'] in posted_games:
@@ -108,23 +107,20 @@ def post_to_facebook(free_games):
 
         url = f"https://graph.facebook.com/v21.0/{PAGE_ID}/feed"
         payload = {
-            "message": message.encode("utf-8").decode("utf-8"),
+            "message": message.encode("utf-8").decode("utf-8"),  # Ensure UTF-8 encoding
             "access_token": ACCESS_TOKEN,
-            "link": game['url']
+            "link": game['url']  # Post with a link preview instead of an image
         }
         
         try:
-            response = requests.post(url, json=payload)
+            response = requests.post(url, json=payload)  # Use JSON instead of form-data
             response.raise_for_status()
             logging.info(f"Post published successfully for {game['title']}! Response: {response.json()}")
-            write_posted_game(game['title'])
-            games_posted = True  # Set to True when at least one game is posted
+            write_posted_game(game['title'])  # Log the posted game title
         except requests.RequestException as e:
             logging.error(f"Failed to publish post for {game['title']}: {e}")
         
-        time.sleep(5)
-    
-    return games_posted  # Return whether any games were posted
+        time.sleep(5)  # Prevent hitting rate limits
 
 def validate_environment_variables():
     """Validate required environment variables."""
@@ -134,23 +130,16 @@ def validate_environment_variables():
 
 def main():
     """Main function to fetch games and send notifications."""
-    try:
-        validate_environment_variables()
-        
-        logging.info("Fetching free games...")
-        free_games = fetch_free_games()
-        
-        if free_games:
-            logging.info(f"{len(free_games)} free games found! Posting to Facebook...")
-            games_posted = post_to_facebook(free_games)
-            if not games_posted:
-                logging.info("No new games were posted (all games were already in the log).")
-        else:
-            logging.info("No free games available at the moment.")
-            
-    except Exception as e:
-        logging.error(f"An error occurred: {str(e)}")
-        raise  # Re-raise the exception to ensure the workflow fails on actual errors
+    validate_environment_variables()
+    
+    logging.info("Fetching free games...")
+    free_games = fetch_free_games()
+    
+    if free_games:
+        logging.info(f"{len(free_games)} free games found! Posting to Facebook...")
+        post_to_facebook(free_games)
+    else:
+        logging.info("No free games available at the moment.")
 
 if __name__ == "__main__":
     main()
